@@ -57,7 +57,7 @@
                         name="remember"
                         class="rounded border-gray-300 text-green-600 focus:ring-green-500 transition-colors"
                     >
-                    <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
+                    <span class="ms-2 text-sm text-gray-600">{{ __('Ingat saya') }}</span>
                 </label>
 
                 {{-- @if (Route::has('password.request'))

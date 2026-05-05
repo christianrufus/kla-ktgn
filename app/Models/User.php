@@ -65,11 +65,20 @@ class User extends Authenticatable
     const STATUS_USER = 0;
 
     /**
-     * Check if user is admin
+     * Check if user is Admin
      */
     public function isAdmin()
     {
         return $this->status === 1;
+    }
+
+    /**
+     * Check if user is User
+     */
+
+    public function isUser()
+    {
+        return $this->status === 0;
     }
 
     /**
