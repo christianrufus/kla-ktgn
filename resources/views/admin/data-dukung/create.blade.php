@@ -54,25 +54,9 @@
                                 <label class="block text-sm font-medium text-gray-700">File</label>
                                 <div class="space-y-4">
                                     <div class="bg-gray-50 p-4 rounded-lg">
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">Upload Banyak File Sekaligus</label>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Upload</label>
                                         <input type="file" name="files[]" multiple class="mt-1 block w-full" accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png">
                                         <p class="mt-1 text-xs text-gray-500">Pilih beberapa file sekaligus dengan CTRL + Klik atau drag and drop beberapa file</p>
-                                    </div>
-
-                                    <div class="bg-gray-50 p-4 rounded-lg">
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">Upload Satu Per Satu</label>
-                                        <div id="fileInputs" class="space-y-4">
-                                            <div class="file-input-group">
-                                                <div class="flex items-center">
-                                                    <input type="file" name="files[]" class="mt-1 block w-full" accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png">
-                                                    <button type="button" onclick="addFileInput()" class="ml-2 text-indigo-600 hover:text-indigo-900">
-                                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
-                                                        </svg>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
 
@@ -208,62 +192,75 @@
             }
         });
 
-        function updateFilePreview() {
-            const selectedFiles = document.getElementById('selectedFiles');
-            selectedFiles.innerHTML = '';
-            
-            const allFiles = [];
-            const fileInputs = document.querySelectorAll('input[type="file"]');
-            
-            fileInputs.forEach(input => {
-                if (input.files.length > 0) {
-                    Array.from(input.files).forEach(file => {
-                        allFiles.push(file);
-                    });
-                }
+function updateFilePreview() {
+    const selectedFiles = document.getElementById('selectedFiles');
+    selectedFiles.innerHTML = '';
+
+    const input = document.querySelector('input[name="files[]"]');
+    if (!input || input.files.length === 0) return;
+
+    const dt = new DataTransfer();
+    Array.from(input.files).forEach(file => dt.items.add(file));
+
+    Array.from(input.files).forEach((file, index) => {
+        const fileDiv = document.createElement('div');
+        fileDiv.className = 'flex flex-col p-3 bg-gray-50 rounded mb-2';
+        fileDiv.id = `file-${index}`;
+
+        const fileInfo = document.createElement('div');
+        fileInfo.className = 'flex items-center mb-2';
+
+        const icon = document.createElement('span');
+        icon.className = 'mr-2';
+        icon.innerHTML = '📎';
+
+        const fileName = document.createElement('span');
+        fileName.className = 'flex-1';
+        fileName.textContent = `${index + 1}. ${file.name} (${formatFileSize(file.size)})`;
+
+        const status = document.createElement('span');
+        status.className = 'ml-2 text-sm text-gray-600';
+        status.id = `status-${index}`;
+        status.textContent = 'Siap diupload';
+
+        // Tombol hapus per file
+        const removeBtn = document.createElement('button');
+        removeBtn.type = 'button';
+        removeBtn.className = 'ml-2 text-red-500 hover:text-red-700';
+        removeBtn.innerHTML = `
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+        `;
+        removeBtn.addEventListener('click', () => {
+            const newDt = new DataTransfer();
+            Array.from(input.files).forEach((f, i) => {
+                if (i !== index) newDt.items.add(f);
             });
-            
-            allFiles.forEach((file, index) => {
-                const fileDiv = document.createElement('div');
-                fileDiv.className = 'flex flex-col p-3 bg-gray-50 rounded mb-2';
-                fileDiv.id = `file-${index}`;
-                
-                const fileInfo = document.createElement('div');
-                fileInfo.className = 'flex items-center mb-2';
-                
-                const icon = document.createElement('span');
-                icon.className = 'mr-2';
-                icon.innerHTML = '📎';
-                
-                const fileName = document.createElement('span');
-                fileName.className = 'flex-1';
-                fileName.textContent = `${index + 1}. ${file.name} (${formatFileSize(file.size)})`;
-                
-                const status = document.createElement('span');
-                status.className = 'ml-2 text-sm text-gray-600';
-                status.id = `status-${index}`;
-                status.textContent = 'Siap diupload';
-                
-                fileInfo.appendChild(icon);
-                fileInfo.appendChild(fileName);
-                fileInfo.appendChild(status);
-                
-                const progressContainer = document.createElement('div');
-                progressContainer.className = 'hidden w-full bg-gray-200 rounded h-2 mt-2';
-                progressContainer.id = `progress-container-${index}`;
-                
-                const progressBar = document.createElement('div');
-                progressBar.className = 'bg-indigo-600 h-2 rounded transition-all duration-300';
-                progressBar.id = `progress-${index}`;
-                progressBar.style.width = '0%';
-                
-                progressContainer.appendChild(progressBar);
-                
-                fileDiv.appendChild(fileInfo);
-                fileDiv.appendChild(progressContainer);
-                selectedFiles.appendChild(fileDiv);
-            });
-        }
+            input.files = newDt.files;
+            updateFilePreview();
+        });
+
+        fileInfo.appendChild(icon);
+        fileInfo.appendChild(fileName);
+        fileInfo.appendChild(status);
+        fileInfo.appendChild(removeBtn);
+
+        const progressContainer = document.createElement('div');
+        progressContainer.className = 'hidden w-full bg-gray-200 rounded h-2 mt-2';
+        progressContainer.id = `progress-container-${index}`;
+
+        const progressBar = document.createElement('div');
+        progressBar.className = 'bg-indigo-600 h-2 rounded transition-all duration-300';
+        progressBar.id = `progress-${index}`;
+        progressBar.style.width = '0%';
+
+        progressContainer.appendChild(progressBar);
+        fileDiv.appendChild(fileInfo);
+        fileDiv.appendChild(progressContainer);
+        selectedFiles.appendChild(fileDiv);
+    });
+}
 
         function formatFileSize(bytes) {
             if (bytes === 0) return '0 Bytes';
