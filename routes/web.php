@@ -48,20 +48,20 @@ Route::get('/dashboard', function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::prefix('manage/media')->group(function () {
-        Route::get('/', function() {
-            $media = Media::where(function($query) {
+        Route::get('/', function () {
+            $media = Media::where(function ($query) {
                 $query->where('file', 'like', '%.jpg')
-                      ->orWhere('file', 'like', '%.jpeg')
-                      ->orWhere('file', 'like', '%.png')
-                      ->orWhere('file', 'like', '%.gif');
+                    ->orWhere('file', 'like', '%.jpeg')
+                    ->orWhere('file', 'like', '%.png')
+                    ->orWhere('file', 'like', '%.gif');
             })->latest()->get();
             return view('admin.media.index', compact('media'));
         })->name('media.index');
-        
+
         Route::get('/create', function () {
             return view('admin.media.create');
         })->name('media.create');
-        
+
         Route::get('/{id}/edit', function ($id) {
             $media = Media::findOrFail($id);
             return view('admin.media.edit', compact('media'));
@@ -70,24 +70,24 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::middleware(['auth', 'admin'])->prefix('manage/berita')->group(function () {
-    Route::get('/', function() {
+    Route::get('/', function () {
         $news = News::with(['kategori', 'creator'])->latest()->get();
         return view('admin.berita.index', compact('news'));
     })->name('berita.index');
 });
 
 Route::middleware(['auth'])->prefix('manage')->group(function () {
-    Route::get('/agenda', function() {
+    Route::get('/agenda', function () {
         $agendas = Agenda::orderBy('tanggal', 'desc')->get();
         $expiredCount = Agenda::where('tanggal', '<', now()->subDay())->count();
         return view('admin.agenda.index', compact('agendas', 'expiredCount'));
     })->name('admin.agenda.index');
-    
+
     Route::prefix('agenda')->group(function () {
         Route::get('/create', function () {
             return view('admin.agenda.create');
         })->name('admin.agenda.create');
-        
+
         Route::get('/{id}/edit', function ($id) {
             return view('admin.agenda.edit', compact('id'));
         })->name('admin.agenda.edit');
@@ -96,7 +96,7 @@ Route::middleware(['auth'])->prefix('manage')->group(function () {
 
 Route::middleware(['auth', 'admin'])->prefix('manage')->group(function () {
     Route::prefix('kategori')->group(function () {
-        Route::get('/', function() {
+        Route::get('/', function () {
             $categories = Kategori::withCount('news')->latest()->get();
             return view('admin.kategori.index', compact('categories'));
         })->name('admin.kategori.index');
@@ -104,7 +104,7 @@ Route::middleware(['auth', 'admin'])->prefix('manage')->group(function () {
         Route::get('/create', function () {
             return view('admin.kategori.create');
         })->name('admin.kategori.create');
-        
+
         Route::get('/{id}/edit', function ($id) {
             $kategori = Kategori::findOrFail($id);
             return view('admin.kategori.edit', compact('kategori'));
@@ -113,28 +113,28 @@ Route::middleware(['auth', 'admin'])->prefix('manage')->group(function () {
 });
 
 Route::middleware(['auth'])->prefix('manage/dokumen')->group(function () {
-    Route::get('/', function() {
-        $documents = Media::where(function($query) {
+    Route::get('/', function () {
+        $documents = Media::where(function ($query) {
             $query->where('file', 'like', '%.pdf')
-                  ->orWhere('file', 'like', '%.doc')
-                  ->orWhere('file', 'like', '%.docx')
-                  ->orWhere('file', 'like', '%.xls')
-                  ->orWhere('file', 'like', '%.xlsx');
+                ->orWhere('file', 'like', '%.doc')
+                ->orWhere('file', 'like', '%.docx')
+                ->orWhere('file', 'like', '%.xls')
+                ->orWhere('file', 'like', '%.xlsx');
         })->latest()->get();
         return view('admin.dokumen.index', compact('documents'));
     })->name('admin.dokumen.index');
 
-    Route::get('/create', function() {
+    Route::get('/create', function () {
         return view('admin.dokumen.create');
     })->name('admin.dokumen.create');
 
-    Route::get('/{id}/edit', function($id) {
+    Route::get('/{id}/edit', function ($id) {
         $document = Media::findOrFail($id);
         return view('admin.dokumen.edit', compact('document'));
     })->name('admin.dokumen.edit');
 });
 
-Route::get('/manage/kontak', function() {
+Route::get('/manage/kontak', function () {
     $contacts = \App\Models\Contact::latest()->get();
     return view('admin.kontak.index', compact('contacts'));
 })->name('admin.kontak.index');
@@ -143,8 +143,8 @@ Route::middleware(['auth', 'admin'])->prefix('manage/setting')->group(function (
     Route::get('/statis', [SettingController::class, 'indexStatis'])->name('admin.setting.statis.index');
     Route::get('/statis/create', [SettingController::class, 'createStatis'])->name('admin.setting.statis.create');
     Route::get('/statis/edit/{setting}', [SettingController::class, 'editStatis'])->name('admin.setting.statis.edit');
-    
-    Route::get('/video', [SettingController::class, 'indexVideo'])->name('admin.setting.video.index'); 
+
+    Route::get('/video', [SettingController::class, 'indexVideo'])->name('admin.setting.video.index');
     Route::get('/video/create', [SettingController::class, 'createVideo'])->name('admin.setting.video.create');
     Route::get('/video/edit/{setting}', [SettingController::class, 'editVideo'])->name('admin.setting.video.edit');
 });
@@ -157,51 +157,51 @@ Route::prefix('manage/users')->middleware(['auth', 'admin'])->group(function () 
 
 Route::get('/video', function () {
     $videoSettings = Setting::where('type', 'video')
-                          ->latest()
-                          ->paginate(6);
+        ->latest()
+        ->paginate(6);
     return view('beranda.video', compact('videoSettings'));
 })->name('video');
 
 Route::get('/video/halaman/{page}', function ($page) {
     $videoSettings = Setting::where('type', 'video')
-                          ->latest()
-                          ->paginate(6, ['*'], 'page', $page);
+        ->latest()
+        ->paginate(6, ['*'], 'page', $page);
     return view('beranda.video', compact('videoSettings'));
 })->name('video.page');
 
 Route::get('/galeri', function () {
-    $media = Media::where(function($query) {
+    $media = Media::where(function ($query) {
         $query->where('file', 'like', '%.jpg')
-              ->orWhere('file', 'like', '%.jpeg')
-              ->orWhere('file', 'like', '%.png')
-              ->orWhere('file', 'like', '%.gif');
+            ->orWhere('file', 'like', '%.jpeg')
+            ->orWhere('file', 'like', '%.png')
+            ->orWhere('file', 'like', '%.gif');
     })->latest()->get();
     return view('beranda.galeri', compact('media'));
 })->name('galeri');
 
 Route::get('/dokumen', function (Request $request) {
-    $query = Media::where(function($query) {
+    $query = Media::where(function ($query) {
         $query->where('file', 'like', '%.pdf')
-              ->orWhere('file', 'like', '%.doc')
-              ->orWhere('file', 'like', '%.docx')
-              ->orWhere('file', 'like', '%.xls')
-              ->orWhere('file', 'like', '%.xlsx');
+            ->orWhere('file', 'like', '%.doc')
+            ->orWhere('file', 'like', '%.docx')
+            ->orWhere('file', 'like', '%.xls')
+            ->orWhere('file', 'like', '%.xlsx');
     });
-    
+
     if ($request->filled('q')) {
         $search = strip_tags($request->q);
         $query->where('name', 'like', '%' . addslashes($search) . '%');
     }
-    
+
     $allowedPerPage = [10, 25, 50, 100];
     $perPage = in_array($request->input('show'), $allowedPerPage) ? $request->input('show') : 10;
-    
+
     $media = $query->latest()->paginate($perPage);
-    
+
     if ($request->ajax()) {
         return view('beranda.dokumen-list', compact('media'))->render();
     }
-    
+
     return view('beranda.dokumen', compact('media'));
 })->name('dokumen');
 
@@ -211,24 +211,24 @@ Route::prefix('profil')->group(function () {
     Route::get('/', function () {
         return view('profil.index');
     })->name('profil');
-    
-    
+
+
     Route::get('/visi-misi', function () {
         return view('profil.visi-misi');
     })->name('profil.visi-misi');
-    
+
     Route::get('/program-kerja', [App\Http\Controllers\ProfilController::class, 'program'])->name('profil.program');
 });
 
 
 Route::prefix('pemenuhan-hak-anak')->group(function () {
-    
+
     Route::get('/klaster-1', [KlasterController::class, 'klaster1'])->name('pemenuhan-hak-anak.klaster1');
-    
+
     Route::get('/klaster-2', [KlasterController::class, 'klaster2'])->name('pemenuhan-hak-anak.klaster2');
-    
+
     Route::get('/klaster-3', [KlasterController::class, 'klaster3'])->name('pemenuhan-hak-anak.klaster3');
-    
+
     Route::get('/klaster-4', [KlasterController::class, 'klaster4'])->name('pemenuhan-hak-anak.klaster4');
 });
 
@@ -241,103 +241,103 @@ Route::post('/kontak', [ContactUsController::class, 'store']);
 
 Route::get('/berita', function () {
     $query = News::with(['kategori', 'creator'])
-                ->where('status', 1)
-                ->latest();
-    
+        ->where('status', 1)
+        ->latest();
+
     $news = $query->paginate(6);
     $categories = Kategori::withCount('news')->get();
-    
+
     return view('beranda.berita', compact('news', 'categories'));
 })->name('berita');
-    
+
 Route::get('/berita/kategori/{kategori}', function ($kategori) {
     if (config('database.default') === 'pgsql') {
         $kategoriModel = Kategori::whereRaw("LOWER(REPLACE(name, ' ', '-')) = ?", [strtolower($kategori)])
-                        ->orWhereRaw("LOWER(name) LIKE ?", ['%' . str_replace('-', ' ', strtolower($kategori)) . '%'])
-                        ->first();
+            ->orWhereRaw("LOWER(name) LIKE ?", ['%' . str_replace('-', ' ', strtolower($kategori)) . '%'])
+            ->first();
     } else {
         $kategoriModel = Kategori::whereRaw("LOWER(REPLACE(name, ' ', '-')) = ?", [strtolower($kategori)])
-                        ->orWhereRaw("LOWER(name) LIKE ?", ['%' . str_replace('-', ' ', strtolower($kategori)) . '%'])
-                        ->first();
+            ->orWhereRaw("LOWER(name) LIKE ?", ['%' . str_replace('-', ' ', strtolower($kategori)) . '%'])
+            ->first();
     }
-    
+
     if (!$kategoriModel) {
-        $kategoriModel = Kategori::all()->first(function($cat) use ($kategori) {
+        $kategoriModel = Kategori::all()->first(function ($cat) use ($kategori) {
             return Str::slug($cat->name) === $kategori;
         });
     }
 
     $query = News::with(['kategori', 'creator'])
-                ->where('status', 1)
-                ->latest();
-                
+        ->where('status', 1)
+        ->latest();
+
     if ($kategoriModel) {
         $query->where('kategori_id', $kategoriModel->id);
     } else {
-        $query->whereHas('kategori', function($q) use ($kategori) {
+        $query->whereHas('kategori', function ($q) use ($kategori) {
             $cleanKategori = str_replace('-', ' ', $kategori);
             $q->whereRaw("LOWER(name) LIKE ?", ['%' . strtolower($cleanKategori) . '%']);
         });
     }
-    
+
     $news = $query->paginate(6);
     $categories = Kategori::withCount('news')->get();
-    
+
     return view('beranda.berita', compact('news', 'categories', 'kategori'));
 })->name('berita.kategori');
 
 Route::get('/berita/kategori/{kategori}/halaman/{page}', function ($kategori, $page) {
     if (config('database.default') === 'pgsql') {
         $kategoriModel = Kategori::whereRaw("LOWER(REPLACE(name, ' ', '-')) = ?", [strtolower($kategori)])
-                        ->orWhereRaw("LOWER(name) LIKE ?", ['%' . str_replace('-', ' ', strtolower($kategori)) . '%'])
-                        ->first();
+            ->orWhereRaw("LOWER(name) LIKE ?", ['%' . str_replace('-', ' ', strtolower($kategori)) . '%'])
+            ->first();
     } else {
         $kategoriModel = Kategori::whereRaw("LOWER(REPLACE(name, ' ', '-')) = ?", [strtolower($kategori)])
-                        ->orWhereRaw("LOWER(name) LIKE ?", ['%' . str_replace('-', ' ', strtolower($kategori)) . '%'])
-                        ->first();
+            ->orWhereRaw("LOWER(name) LIKE ?", ['%' . str_replace('-', ' ', strtolower($kategori)) . '%'])
+            ->first();
     }
-    
+
     if (!$kategoriModel) {
-        $kategoriModel = Kategori::all()->first(function($cat) use ($kategori) {
+        $kategoriModel = Kategori::all()->first(function ($cat) use ($kategori) {
             return Str::slug($cat->name) === $kategori;
         });
     }
-    
+
     $query = News::with(['kategori', 'creator'])
-                ->where('status', 1)
-                ->latest();
-                
+        ->where('status', 1)
+        ->latest();
+
     if ($kategoriModel) {
         $query->where('kategori_id', $kategoriModel->id);
     } else {
-        $query->whereHas('kategori', function($q) use ($kategori) {
+        $query->whereHas('kategori', function ($q) use ($kategori) {
             $cleanKategori = str_replace('-', ' ', $kategori);
             $q->whereRaw("LOWER(name) LIKE ?", ['%' . strtolower($cleanKategori) . '%']);
         });
     }
-    
+
     $news = $query->paginate(6, ['*'], 'page', $page);
     $categories = Kategori::withCount('news')->get();
-    
+
     if ($news->isEmpty() && $page > 1) {
         return redirect()->route('berita.kategori', $kategori);
     }
-    
+
     return view('beranda.berita', compact('news', 'categories', 'kategori'));
 })->name('berita.kategori.page');
 
 Route::get('/berita/halaman/{page}', function ($page) {
     $query = News::with(['kategori', 'creator'])
-                ->where('status', 1)
-                ->latest();
-    
+        ->where('status', 1)
+        ->latest();
+
     $news = $query->paginate(6, ['*'], 'page', $page);
     $categories = Kategori::withCount('news')->get();
-    
+
     if ($news->isEmpty() && $page > 1) {
         return redirect()->route('berita');
     }
-    
+
     return view('beranda.berita', compact('news', 'categories'));
 })->name('berita.page');
 
@@ -349,7 +349,7 @@ Route::middleware(['auth', 'admin'])->prefix('manage')->name('admin.')->group(fu
         Route::get('/create', [App\Http\Controllers\Admin\UserController::class, 'create'])->name('users.create');
         Route::get('/{user}/edit', [App\Http\Controllers\Admin\UserController::class, 'edit'])->name('users.edit');
     });
-    
+
     Route::prefix('setting')->group(function () {
         Route::get('/', [SettingController::class, 'index'])->name('setting.index');
         Route::get('/create', [SettingController::class, 'create'])->name('setting.create');
@@ -362,16 +362,27 @@ Route::middleware(['auth', 'admin'])->prefix('manage')->name('admin.')->group(fu
         Route::get('/{news}/edit', [App\Http\Controllers\Admin\NewsController::class, 'edit'])->name('news.edit');
     });
 
+    Route::prefix('my-news')->group(function () {
+        Route::get('/', [App\Http\Controllers\Admin\MyNewsController::class, 'index'])
+            ->name('my-news.index');
+
+        Route::get('/create', [App\Http\Controllers\Admin\MyNewsController::class, 'create'])
+            ->name('my-news.create');
+
+        Route::get('/{news}/edit', [App\Http\Controllers\Admin\MyNewsController::class, 'edit'])
+            ->name('my-news.edit');
+    });
+
     Route::prefix('kategori')->group(function () {
-        Route::get('/', function() {
+        Route::get('/', function () {
             $categories = Kategori::withCount('news')->latest()->get();
             return view('admin.kategori.index', compact('categories'));
         })->name('kategori.index');
-        
+
         Route::get('/create', function () {
             return view('admin.kategori.create');
         })->name('kategori.create');
-        
+
         Route::get('/{id}/edit', function ($id) {
             $kategori = Kategori::findOrFail($id);
             return view('admin.kategori.edit', compact('kategori'));
@@ -384,30 +395,30 @@ Route::middleware(['auth', 'admin'])->prefix('manage')->name('admin.')->group(fu
 
 Route::prefix('galeri')->group(function () {
     Route::get('/', function () {
-        $media = Media::where(function($query) {
+        $media = Media::where(function ($query) {
             $query->where('file', 'like', '%.jpg')
-                  ->orWhere('file', 'like', '%.jpeg')
-                  ->orWhere('file', 'like', '%.png')
-                  ->orWhere('file', 'like', '%.gif');
+                ->orWhere('file', 'like', '%.jpeg')
+                ->orWhere('file', 'like', '%.png')
+                ->orWhere('file', 'like', '%.gif');
         })->latest()->paginate(12);
         return view('beranda.galeri', compact('media'));
     })->name('galeri');
-    
+
     Route::get('/halaman/{page}', function ($page) {
-        $media = Media::where(function($query) {
+        $media = Media::where(function ($query) {
             $query->where('file', 'like', '%.jpg')
-                  ->orWhere('file', 'like', '%.jpeg')
-                  ->orWhere('file', 'like', '%.png')
-                  ->orWhere('file', 'like', '%.gif');
+                ->orWhere('file', 'like', '%.jpeg')
+                ->orWhere('file', 'like', '%.png')
+                ->orWhere('file', 'like', '%.gif');
         })->latest()->paginate(12, ['*'], 'page', $page);
-        
+
         if ($media->isEmpty() && $page > 1) {
             return redirect()->route('galeri');
         }
-        
+
         return view('beranda.galeri', compact('media'));
     })->name('galeri.page')->where('page', '[0-9]+');
-    
+
     Route::get('/{id}', function ($id) {
         $media = Media::findOrFail($id);
         $media->increment('hits');
