@@ -17,12 +17,12 @@ class WelcomeController extends Controller
         $latestNews = News::with(['kategori', 'creator'])
                         ->where('status', 1)
                         ->latest()
-                        ->take(3)
+                        ->take(2)
                         ->get();
         
         $upcomingAgendas = Agenda::where('tanggal', '>=', now()->subDay())
                         ->orderBy('tanggal', 'asc')
-                        ->take(3)
+                        ->take(2)
                         ->get();
 
         $galleries = Media::where(function($query) {
