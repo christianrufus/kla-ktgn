@@ -372,7 +372,7 @@
                                                 </a>
                                             </h3>
                                             <p class="text-indigo-500 text-sm mt-2">
-                                                {{ \Carbon\Carbon::parse($item->created_at)->format('d F Y') }}
+                                                {{ \Carbon\Carbon::parse($item->created_at)->format('d M Y H:i') }}
                                             </p>
                                             <p class="text-gray-600 mt-2 line-clamp-3">
                                                 {{ Str::limit(strip_tags($item->content), 150) }}

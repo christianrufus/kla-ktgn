@@ -18,7 +18,7 @@
 
                     <!-- Meta Info -->
                     <div class="flex items-center text-gray-600 text-sm mb-6">
-                        <span>{{ \Carbon\Carbon::parse($news->created_at)->format('d F Y') }}</span>
+                        <span>{{ \Carbon\Carbon::parse($news->created_at)->format('d M Y H:i') }}</span>
                         <span class="mx-2">•</span>
                         <span>Oleh: {{ $news->creator->name }}</span>
                         {{-- <span class="mx-2">•</span>

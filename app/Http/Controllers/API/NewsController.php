@@ -103,7 +103,8 @@ class NewsController extends Controller
             'title' => 'required|string|max:255',
             'content' => 'required|string',
             'image' => 'nullable|image|max:51200',
-            'flag' => 'nullable|string|max:20'
+            'flag' => 'nullable|string|max:20',
+            'created_at' => 'required|date'
         ]);
 
         if ($validator->fails()) {
@@ -123,6 +124,8 @@ class NewsController extends Controller
 
         $status = 0;
 
+        $createdAt = $request->created_at;
+
         $news = News::create([
             'kategori_id' => $request->kategori_id,
             'title' => $request->title,
@@ -131,7 +134,8 @@ class NewsController extends Controller
             'created_by' => Auth::id(),
             'counter' => 0,
             'flag' => $request->flag ?? 'kegiatan',
-            'status' => $status
+            'status' => $status,
+            'created_at' => $createdAt
         ]);
 
         return response()->json([

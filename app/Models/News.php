@@ -19,7 +19,8 @@ class News extends Model
         'created_by',
         'counter',
         'flag',
-        'status'
+        'status',
+        'created_at'
     ];
 
     protected $casts = [
