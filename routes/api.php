@@ -59,6 +59,7 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::apiResource('setting', SettingController::class)->except(['index']);
     Route::post('/news/{id}/approve', [NewsController::class, 'approve']);
     Route::post('/news/{id}/reject', [NewsController::class, 'reject']);
+    Route::post('/news/{id}/revert', [NewsController::class, 'revert']);
 });
 
 Route::get('/klaster/{klaster}/indikators', function (Klaster $klaster) {

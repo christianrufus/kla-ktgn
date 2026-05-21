@@ -498,6 +498,31 @@ class NewsController extends Controller
      *     )
      * )
      */
+    public function revert($id)
+    {
+        if (!auth()->user()->isAdmin()) {
+            abort(403);
+        }
+
+        $news = News::findOrFail($id);
+
+
+        if ($news->status != 1) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Hanya berita disetujui yang dapat direvert.'
+            ], 400);
+        }
+
+        $news->status = 0;
+
+        $news->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Berita berhasil dikembalikan ke pending.'
+        ]);
+    }
     public function getUserNews()
     {
         return response()->json([

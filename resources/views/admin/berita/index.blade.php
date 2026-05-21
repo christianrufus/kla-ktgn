@@ -85,7 +85,27 @@
                                             @endif
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium border-b flex space-x-2">
-                                            <a href="{{ route('admin.news.edit', $item->id) }}" class="text-blue-600 hover:text-blue-900">
+                                            @if($item->status == 1)
+                                            <button onclick="revertNews({{ $item->id }})"
+                                                class="text-yellow-600 hover:text-yellow-800"
+                                                title="Kembalikan ke Pending">
+
+                                                <svg class="w-5 h-5"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    viewBox="0 0 24 24">
+
+                                                    <path
+                                                        stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M3 10h10a4 4 0 014 4v7m0 0l-4-4m4 4l4-4">
+                                                    </path>
+
+                                                </svg>
+                                            </button>
+                                            @endif
+                                        <a href="{{ route('admin.news.edit', $item->id) }}" class="text-blue-600 hover:text-blue-900">
                                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                                                 </svg>
@@ -300,6 +320,26 @@
                             ${statusBadge}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium border-b flex space-x-2">
+                            ${item.status === 1 ? `
+                            <button onclick="revertNews(${item.id})"
+                                class="text-yellow-600 hover:text-yellow-800"
+                                title="Kembalikan ke Pending">
+
+                                <svg class="w-5 h-5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24">
+
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M3 10h10a4 4 0 014 4v7m0 0l-4-4m4 4l4-4">
+                                    </path>
+
+                                </svg>
+                            </button>
+                            ` : ''}
                             <a href="/manage/news/${item.id}/edit" class="text-indigo-600 hover:text-indigo-900">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
@@ -492,6 +532,67 @@
                         hideLoading();
                     });
                 }
+            });
+        }
+
+        function revertNews(id) {
+            Swal.fire({
+                title: 'Kembalikan berita?',
+                text: 'Status berita akan dikembalikan ke pending.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Kembalikan',
+                cancelButtonText: 'Batal'
+
+            }).then((result) => {
+
+                if (result.isConfirmed) {
+
+                    showLoading();
+
+                    axios.post(`/api/news/${id}/revert`, {}, {
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                            'Authorization': 'Bearer ' + document.querySelector('meta[name="api-token"]').content
+                        }
+                    })
+
+                    .then(response => {
+
+                        if (response.data.success) {
+
+                            Swal.fire(
+                                'Berhasil!',
+                                'Berita berhasil dikembalikan ke pending.',
+                                'success'
+                            ).then(() => {
+                                window.location.reload();
+                            });
+
+                        }
+
+                    })
+
+                    .catch(error => {
+
+                        console.error(error);
+
+                        Swal.fire(
+                            'Error!',
+                            error.response?.data?.message || 'Gagal revert berita.',
+                            'error'
+                        );
+
+                    })
+
+                    .finally(() => {
+                        hideLoading();
+                    });
+
+                }
+
             });
         }
     </script>
