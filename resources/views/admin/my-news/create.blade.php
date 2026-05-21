@@ -38,6 +38,8 @@
                                 Tanggal
                             </label>
                             <input type="datetime-local" name="created_at" value="{{ now()->format('Y-m-d\TH:i') }}"
+                                min="{{ now()->subYear()->format('Y-m-d\TH:i') }}"
+                                max="{{ now()->addMonth()->format('Y-m-d\TH:i') }}"
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                                 required>
 

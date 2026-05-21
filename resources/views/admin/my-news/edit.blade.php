@@ -40,6 +40,8 @@
 
                             <input type="datetime-local" name="created_at"
                                 value="{{ \Carbon\Carbon::parse($news->created_at)->format('Y-m-d\TH:i') }}"
+                                min="{{ now()->subYear()->format('Y-m-d\TH:i') }}"
+                                max="{{ now()->addMonth()->format('Y-m-d\TH:i') }}"
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
 
                             <p class="text-red-500 text-xs mt-1" id="created_atError"></p>
