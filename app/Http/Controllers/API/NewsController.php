@@ -65,8 +65,8 @@ class NewsController extends Controller
     public function index()
     {
         $news = News::with(['kategori', 'creator'])
-                    ->latest()
-                    ->get();
+            ->latest()
+            ->get();
         return response()->json([
             'success' => true,
             'data' => $news
@@ -123,6 +123,15 @@ class NewsController extends Controller
         }
 
         $status = 0;
+
+        $status = 0;
+
+        if (
+            Auth::user()->isAdmin() &&
+            $request->auto_approve
+        ) {
+            $status = 1;
+        }
 
         $createdAt = $request->created_at;
 
@@ -273,7 +282,8 @@ class NewsController extends Controller
             'title' => 'required|string|max:255',
             'content' => 'required|string',
             'image' => 'nullable|image|max:51200',
-            'flag' => 'nullable|string|max:20'
+            'flag' => 'nullable|string|max:20',
+            'auto_approve' => 'nullable|boolean'
         ]);
 
         if ($validator->fails()) {

@@ -88,6 +88,15 @@
                             <p class="text-red-500 text-xs mt-1" id="imageError"></p>
                         </div>
 
+                        <div class="flex items-center">
+                            <input type="checkbox" name="auto_approve" id="auto_approve" value="1"
+                                class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500">
+
+                            <label for="auto_approve" class="ml-2 text-sm text-gray-700">
+                                Publikasikan langsung
+                            </label>
+                        </div>
+
                         <div>
                             <button type="submit"
                                 class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
