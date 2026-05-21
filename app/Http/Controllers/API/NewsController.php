@@ -270,11 +270,22 @@ class NewsController extends Controller
     public function update(Request $request, $id)
     {
         $news = News::find($id);
+
         if (!$news) {
             return response()->json([
                 'success' => false,
                 'message' => 'News not found'
             ], 404);
+        }
+
+        if (
+            auth()->user()->isUser() &&
+            $news->status == 1
+        ) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Berita yang sudah disetujui tidak dapat diedit.'
+            ], 403);
         }
 
         $validator = Validator::make($request->all(), [
@@ -344,6 +355,15 @@ class NewsController extends Controller
     public function destroy($id)
     {
         $news = News::find($id);
+        if (
+            auth()->user()->isUser() &&
+            $news->status == 1
+        ) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Berita yang sudah disetujui tidak dapat dihapus.'
+            ], 403);
+        }
         if (!$news) {
             return response()->json([
                 'success' => false,
