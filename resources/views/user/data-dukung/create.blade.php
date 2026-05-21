@@ -71,25 +71,9 @@
                                 <label class="block text-sm font-medium text-gray-700">File</label>
                                 <div class="space-y-4">
                                     <div class="bg-gray-50 p-4 rounded-lg">
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">Upload Banyak File Sekaligus</label>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Upload File</label>
                                         <input type="file" name="files[]" multiple class="mt-1 block w-full" accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png">
                                         <p class="mt-1 text-xs text-gray-500">Pilih beberapa file sekaligus dengan CTRL + Klik atau drag and drop beberapa file</p>
-                                    </div>
-
-                                    <div class="bg-gray-50 p-4 rounded-lg">
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">Upload Satu Per Satu</label>
-                                        <div id="fileInputs" class="space-y-4">
-                                            <div class="file-input-group">
-                                                <div class="flex items-center">
-                                                    <input type="file" name="files[]" class="mt-1 block w-full" accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png">
-                                                    <button type="button" onclick="addFileInput()" class="ml-2 text-indigo-600 hover:text-indigo-900">
-                                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
-                                                        </svg>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
 

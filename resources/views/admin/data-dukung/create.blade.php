@@ -54,7 +54,7 @@
                                 <label class="block text-sm font-medium text-gray-700">File</label>
                                 <div class="space-y-4">
                                     <div class="bg-gray-50 p-4 rounded-lg">
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">Upload</label>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Upload File</label>
                                         <input type="file" name="files[]" multiple class="mt-1 block w-full" accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png">
                                         <p class="mt-1 text-xs text-gray-500">Pilih beberapa file sekaligus dengan CTRL + Klik atau drag and drop beberapa file</p>
                                     </div>
