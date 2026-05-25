@@ -21,8 +21,10 @@ use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\DokumenController;
 use App\Http\Controllers\KlasterController;
+use App\Http\Controllers\DataDukungController as BerandaDataDukungController;
 use App\Http\Controllers\User\DataDukungController;
 use App\Http\Controllers\Admin\DataDukungController as AdminDataDukungController;
+
 use Dompdf\Dompdf;
 use PhpOffice\PhpWord\IOFactory as WordIOFactory;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -238,6 +240,9 @@ Route::prefix('perlindungan-khusus-anak')->group(function () {
 
 Route::get('/kontak', [ContactUsController::class, 'index'])->name('kontak');
 Route::post('/kontak', [ContactUsController::class, 'store']);
+
+Route::get('/data-dukung', [BerandaDataDukungController::class, 'index'])
+    ->name('data-dukung');
 
 Route::get('/berita', function () {
     $query = News::with(['kategori', 'creator'])

@@ -47,7 +47,7 @@ class IndikatorController extends Controller
             
             $indikator = Indikator::findOrFail($id);
             
-            if ($indikator->dataDukungs()->count() > 0) {
+            if ($indikator->dataDukung()->count() > 0) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Indikator tidak dapat dihapus karena masih memiliki data dukung terkait.'

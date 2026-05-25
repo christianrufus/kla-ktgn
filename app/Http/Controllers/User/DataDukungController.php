@@ -19,11 +19,11 @@ class DataDukungController extends Controller
 {
     public function index()
     {
-        $dataDukungs = DataDukung::with(['opd', 'indikator.klaster', 'files'])
+        $dataDukung = DataDukung::with(['opd', 'indikator.klaster', 'files'])
             ->where('created_by', Auth::id())
             ->latest()
             ->get();
-        return view('user.data-dukung.index', compact('dataDukungs'));
+        return view('user.data-dukung.index', compact('dataDukung'));
     }
 
     public function create()
@@ -265,10 +265,10 @@ class DataDukungController extends Controller
             });
         }
 
-        $dataDukungs = $query->paginate(10);
+        $dataDukung = $query->paginate(10);
         $opds = OPD::orderBy('name')->get();
         $klasters = Klaster::orderBy('name')->get();
 
-        return view('user.data-dukung.all', compact('dataDukungs', 'opds', 'klasters'));
+        return view('user.data-dukung.all', compact('dataDukung', 'opds', 'klasters'));
     }
 } 

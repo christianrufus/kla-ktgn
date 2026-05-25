@@ -55,7 +55,7 @@ class IndikatorController extends Controller
 
     public function destroy(Indikator $indikator)
     {
-        if ($indikator->dataDukungs->count() > 0) {
+        if ($indikator->dataDukung->count() > 0) {
             return redirect()->route('admin.indikator.index')
                 ->with('error', 'Indikator tidak dapat dihapus karena masih memiliki data dukung terkait.');
         }

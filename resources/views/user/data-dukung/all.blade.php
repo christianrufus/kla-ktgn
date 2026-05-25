@@ -6,15 +6,15 @@
     </x-slot>
 
     <div id="dataDukungContainer" 
-         data-items="{{ json_encode($dataDukungs->items()) }}" 
-         data-total="{{ $dataDukungs->total() }}" 
-         data-last-page="{{ $dataDukungs->lastPage() }}" 
-         data-per-page="{{ $dataDukungs->perPage() }}" 
+         data-items="{{ json_encode($dataDukung->items()) }}" 
+         data-total="{{ $dataDukung->total() }}" 
+         data-last-page="{{ $dataDukung->lastPage() }}" 
+         data-per-page="{{ $dataDukung->perPage() }}" 
          style="display: none;"></div>
 
     @if(request()->ajax())
         <script>
-            window.dataDukungItems = @json($dataDukungs->items());
+            window.dataDukungItems = @json($dataDukung->items());
         </script>
     @endif
 

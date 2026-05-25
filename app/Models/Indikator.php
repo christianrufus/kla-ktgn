@@ -19,7 +19,7 @@ class Indikator extends Model
         return $this->belongsTo(Klaster::class);
     }
 
-    public function dataDukungs()
+    public function dataDukung()
     {
         return $this->hasMany(DataDukung::class);
     }
