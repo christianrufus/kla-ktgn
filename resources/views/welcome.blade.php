@@ -53,7 +53,7 @@
                     }" x-init="init()">
                 
                 <!-- Hero Slider in Blob Shape -->
-                <div class="w-full max-w-4xl mx-auto relative group mb-8 h-[300px] lg:h-[500px]" @mouseenter="stopTimer()" @mouseleave="if (canSlide) startTimer()">
+                <div class="w-full max-w-3xl mx-auto relative group mb-8 h-[220px] sm:h-[280px] md:h-[320px] lg:h-[420px]" @mouseenter="stopTimer()" @mouseleave="if (canSlide) startTimer()">
                     <div class="w-full h-full relative overflow-hidden bg-white/5 border-[6px] lg:border-[12px] border-white shadow-2xl transition-all duration-700 ease-in-out hover:rounded-[3rem]"
                          style="border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;">
                         
@@ -123,8 +123,8 @@
                 </div>
 
                 <!-- Main Headline Moved Below Slider (Dynamic Media Title) -->
-                <div class="text-center mt-2 mb-16 z-20 px-4 animate-fade-in-up w-full">
-                    <h1 class="text-3xl md:text-5xl lg:text-6xl font-bold text-white drop-shadow-[0_3px_3px_rgba(0,0,0,0.3)] tracking-wide leading-tight font-sans" 
+                <div class="text-center mt-4 mb-10 z-20 px-4 animate-fade-in-up w-full">
+                    <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white drop-shadow-[0_3px_3px_rgba(0,0,0,0.3)] tracking-wide leading-tight font-sans" 
                         x-text="slides.length > 0 ? slides[currentIndex].name : 'KLA Katingan'">
                     </h1>
                 </div>

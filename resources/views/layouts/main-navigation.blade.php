@@ -1,6 +1,6 @@
 <nav x-data="{ mobileOpen: false }"
     class="fixed top-0 left-0 right-0 z-50 bg-[#5B106B]/95 backdrop-blur-md border-b border-white/10 transition-all duration-200">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-20">
             
             <div class="flex items-center justify-between w-full lg:justify-start"> 
@@ -19,7 +19,7 @@
                     </div>
                 </div>
 
-                <div class="hidden lg:flex items-center space-x-4 lg:ml-auto">
+                <div class="hidden lg:flex items-center gap-6 lg:ml-auto">
                     <a href="/"
                         class="group relative px-3 py-2 text-sm font-bold text-white/90 hover:text-[#00FF87] transition-all duration-200">
                         <span class="relative z-10">{{ __('Beranda') }}</span>
@@ -34,8 +34,8 @@
                         </button>
                         <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 transform -translate-y-2" x-transition:enter-end="opacity-100 transform translate-y-0" class="absolute z-50 w-40 rounded-2xl bg-white shadow-xl ring-1 ring-black ring-opacity-5 focus:outline-none overflow-hidden" style="margin-top: 10px;">
                             <div class="py-2">
-                                <a href="{{ route('profil.visi-misi') }}" class="block px-4 py-2 text-sm font-bold text-[#5B106B] hover:bg-[#00FF87]/20 transition-colors duration-200">Visi dan Misi</a>
-                                <a href="{{ route('profil.program') }}" class="block px-4 py-2 text-sm font-bold text-[#5B106B] hover:bg-[#00FF87]/20 transition-colors duration-200">Program Kerja</a>
+                                <a href="{{ route('profil.visi-misi') }}" class="block px-3 py-2 text-sm font-bold text-[#5B106B] hover:bg-[#00FF87]/20 transition-colors duration-200">Visi dan Misi</a>
+                                <a href="{{ route('profil.program') }}" class="block px-3 py-2 text-sm font-bold text-[#5B106B] hover:bg-[#00FF87]/20 transition-colors duration-200">Program Kerja</a>
                             </div>
                         </div>
                     </div>
@@ -51,7 +51,7 @@
                     </a>
 
                     <a href="{{ route('data-dukung') }}"
-                        class="group relative px-3 py-2 text-sm font-bold text-white/90 hover:text-[#00FF87] transition-all duration-200">
+                        class="group relative text-center px-3 py-2 text-sm font-bold text-white/90 hover:text-[#00FF87] transition-all duration-200">
                         <span class="relative z-10">Data Dukung</span>
                     </a>
 
@@ -64,10 +64,10 @@
                         </button>
                         <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 transform -translate-y-2" x-transition:enter-end="opacity-100 transform translate-y-0" class="absolute z-50 w-40 rounded-2xl bg-white shadow-xl ring-1 ring-black ring-opacity-5 focus:outline-none overflow-hidden" style="margin-top: 10px;">
                             <div class="py-2">
-                                <a href="{{ route('pemenuhan-hak-anak.klaster1') }}" class="block px-4 py-2 text-sm font-bold text-[#5B106B] hover:bg-[#00FF87]/20 transition-colors duration-200">Klaster 1</a>
-                                <a href="{{ route('pemenuhan-hak-anak.klaster2') }}" class="block px-4 py-2 text-sm font-bold text-[#5B106B] hover:bg-[#00FF87]/20 transition-colors duration-200">Klaster 2</a>
-                                <a href="{{ route('pemenuhan-hak-anak.klaster3') }}" class="block px-4 py-2 text-sm font-bold text-[#5B106B] hover:bg-[#00FF87]/20 transition-colors duration-200">Klaster 3</a>
-                                <a href="{{ route('pemenuhan-hak-anak.klaster4') }}" class="block px-4 py-2 text-sm font-bold text-[#5B106B] hover:bg-[#00FF87]/20 transition-colors duration-200">Klaster 4</a>
+                                <a href="{{ route('pemenuhan-hak-anak.klaster1') }}" class="block px-3 py-2 text-sm font-bold text-[#5B106B] hover:bg-[#00FF87]/20 transition-colors duration-200">Klaster 1</a>
+                                <a href="{{ route('pemenuhan-hak-anak.klaster2') }}" class="block px-3 py-2 text-sm font-bold text-[#5B106B] hover:bg-[#00FF87]/20 transition-colors duration-200">Klaster 2</a>
+                                <a href="{{ route('pemenuhan-hak-anak.klaster3') }}" class="block px-3 py-2 text-sm font-bold text-[#5B106B] hover:bg-[#00FF87]/20 transition-colors duration-200">Klaster 3</a>
+                                <a href="{{ route('pemenuhan-hak-anak.klaster4') }}" class="block px-3 py-2 text-sm font-bold text-[#5B106B] hover:bg-[#00FF87]/20 transition-colors duration-200">Klaster 4</a>
                             </div>
                         </div>
                     </div>
@@ -81,14 +81,14 @@
                         </button>
                         <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 transform -translate-y-2" x-transition:enter-end="opacity-100 transform translate-y-0" class="absolute z-50 w-40 rounded-2xl bg-white shadow-xl ring-1 ring-black ring-opacity-5 focus:outline-none overflow-hidden" style="margin-top: 10px;">
                             <div class="py-2">
-                                <a href="{{ route('perlindungan-khusus-anak.klaster5') }}" class="block px-4 py-2 text-sm font-bold text-[#5B106B] hover:bg-[#00FF87]/20 transition-colors duration-200">Klaster 5</a>
+                                <a href="{{ route('perlindungan-khusus-anak.klaster5') }}" class="block px-3 py-2 text-sm font-bold text-[#5B106B] hover:bg-[#00FF87]/20 transition-colors duration-200">Klaster 5</a>
                             </div>
                         </div>
                     </div>
 
                     <a href="/kontak"
-                        class="ml-4 inline-flex items-center justify-center px-6 py-2.5 text-sm font-extrabold text-[#5B106B] bg-[#00FF87] rounded-full hover:bg-[#00E5FF] hover:scale-105 hover:shadow-[0_0_15px_rgba(0,255,135,0.5)] transition-all duration-300">
-                        Get In Touch
+                        class="ml-4 inline-flex text-center items-center justify-center px-6 py-2.5 text-sm font-extrabold text-[#5B106B] bg-[#00FF87] rounded-full hover:bg-[#00E5FF] hover:scale-105 hover:shadow-[0_0_15px_rgba(0,255,135,0.5)] transition-all duration-300">
+                        Kontak Kami
                     </a>
                 </div>
             </div> 
@@ -117,7 +117,7 @@
          x-transition:leave-end="opacity-0 transform -translate-y-4"
          class="lg:hidden absolute w-full left-0 bg-white shadow-lg border-t border-gray-100 z-40 max-h-[calc(100vh-5rem)] overflow-y-auto">
         
-        <div class="px-4 pt-2 pb-6 space-y-1 bg-white">
+        <div class="px-3 pt-2 pb-6 space-y-1 bg-white">
             <a href="/" class="block px-3 py-2 rounded-xl text-sm font-medium text-gray-800 hover:text-blue-600 hover:bg-blue-50 transition-colors">
                 Beranda
             </a>
