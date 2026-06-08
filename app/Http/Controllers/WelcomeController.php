@@ -14,6 +14,17 @@ class WelcomeController extends Controller
     {
         $slides = Media::where('slide_show', true)->get();
 
+        $galleries = Media::where(function($query) {
+            $query->where('file', 'like', '%.jpg')
+                  ->orWhere('file', 'like', '%.jpeg')
+                  ->orWhere('file', 'like', '%.png')
+                  ->orWhere('file', 'like', '%.gif');
+        })->latest()->take(4)->get();
+        
+        if ($slides->isEmpty()) {
+            $slides = $galleries;
+        }
+
         $latestNews = News::with(['kategori', 'creator'])
                         ->where('status', 1)
                         ->latest()
