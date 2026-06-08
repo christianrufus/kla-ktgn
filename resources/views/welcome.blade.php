@@ -30,25 +30,34 @@
                             }
                         },
                         startTimer() {
+                            this.stopTimer();
+
                             this.timer = setInterval(() => {
                                 this.next();
                             }, 5000);
                         },
                         stopTimer() {
                             clearInterval(this.timer);
+                            this.timer = null;
                         },
                         next() {
                             this.currentIndex = (this.currentIndex + 1) % this.slides.length;
+
+                            this.stopTimer();
+                            this.startTimer();
                         },
+
                         prev() {
                             this.currentIndex = (this.currentIndex - 1 + this.slides.length) % this.slides.length;
+
+                            this.stopTimer();
+                            this.startTimer();
                         },
                         goto(index) {
                             this.currentIndex = index;
+
                             this.stopTimer();
-                            setTimeout(() => {
-                                if(this.canSlide) this.startTimer();
-                            }, 1000);
+                            this.startTimer();
                         }
                     }" x-init="init()">
                 
